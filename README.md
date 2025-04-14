@@ -95,6 +95,29 @@ The **7.5-inch E-Ink display** interfaces over SPI and is controlled using:
 
 The display only consumes energy when refreshing. Once the image is rendered, it holds static content without any power draw — perfect for long battery life.
 
+## ESP32-C6 Connection
+
+The following table shows the core hardware connections between the ESP32-C6 and its peripherals, organized by function:
+
+| **Function**         | **ESP32-C6 Pins**                                                                 |
+|----------------------|-----------------------------------------------------------------------------------|
+| **Power & Reset**    | 3V3, GND, EN                                                                      |
+| **USB-C**            | GPIO13 (USB_D+), GPIO14 (USB_D−)                                                  |
+| **SD Card (SPI)**    | GPIO27 (MISO), GPIO7 (MOSI), GPIO6 (SCK), GPIO4 (SS_SD)                           |
+| **E-Paper Display**  | GPIO11 (EPD_CS), GPIO5 (EPD_DC), GPIO21 (EPD_RST), GPIO26 (EPD_BUSY)              |
+| **BME688 Sensor (I²C)** | GPIO19 (SDA), GPIO20 (SCL), GPIO17 (I2C_PWR)                                   |
+| **UART**             | TXD0, RXD0                                                                        |
+| **External Flash**   | FLASH_CS                                                                          |
+| **Other Functions**  | IO/BOOT, RTC_PWM, RTC_RST, INT_RTC                                                |
+
+## Communication Interfaces
+
+- **SPI Bus**: Used by the E-Paper display, external Flash, and SD card. Each device has its own **chip select (CS)** pin to avoid conflicts.
+- **I²C Bus**: Shared among BME688, RTC, and battery monitoring. Devices are addressable and use internal pull-ups for signal integrity.
+- **UART**: Reserved for programming and serial monitoring via USB.
+- **GPIOs**: Dedicated for user interaction (buttons, interrupts) or reserved for future extension.
+
+
 ## The project realization process
 
 - Firstly I built the schematic using the model given in OCW, for the PCB model I followed the scheme respecting the given parameters.
